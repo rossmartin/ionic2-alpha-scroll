@@ -3,11 +3,11 @@ Configurable Ionic 2 component for alphabetically indexed list with an alpha scr
 
 ## Installation
 
-1. Use npm to install the new module:
+1. Use npm to install the component
 ```bash
 npm install ionic2-alpha-scroll --save
 ```
-1. Import the ionic2-alpha-scroll component for your page and add it to your page's directives.
+2. Import the ionic2-alpha-scroll component for your page and add it to your page's directives.
 
 ```javascript
 import { IonAlphaScroll } from 'ionic2-alpha-scroll';
