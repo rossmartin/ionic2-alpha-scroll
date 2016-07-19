@@ -16,7 +16,7 @@ import { IonAlphaScroll } from 'ionic2-alpha-scroll';
   templateUrl: 'build/pages/alpha-list/alpha-list.html',
   directives: [IonAlphaScroll]
 })
-export class AlphaListPage { }}
+export class AlphaListPage { }
 ```
 
 ## Demo
@@ -57,7 +57,7 @@ export class AlphaListPage {
   currentPageClass = this;
   alphaScrollItemTemplate: string = `
     <div (click)="currentPageClass.onItemClick(item)">
-      {{item.$t}}
+      {{item.name}}
     </div>
   `;
   triggerAlphaScrollChange: number = 0;
@@ -76,10 +76,10 @@ export class AlphaListPage {
   assignBreeds() {
     this.breeds = [
       {
-        "$t": "Affenpinscher"
+        'name': 'Affenpinscher'
       },
       {
-        "$t": "Afghan Hound"
+        'name': 'Afghan Hound'
       },
       // ...
     ];
