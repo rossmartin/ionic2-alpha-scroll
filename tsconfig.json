@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es5",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "sourceMap": true,
+    "declaration": true
+  },
+  "files": [
+    "typings/index.d.ts",
+    "src/ion-alpha-scroll.ts",
+    "src/index.ts"
+  ]
+}

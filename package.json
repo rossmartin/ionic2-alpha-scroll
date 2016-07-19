@@ -1,0 +1,42 @@
+{
+  "name": "ionic2-alpha-scroll",
+  "version": "1.0.0",
+  "description": "Configurable Ionic 2 component for alphabetically indexed list with an alpha scroll bar.",
+  "main": "index.js",
+  "typings": "./index.d.ts",
+  "scripts": {
+    "install_typings": "typings install",
+    "prepublish": "typings install && tsc --outDir .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rossmartin/ionic2-alpha-scroll.git"
+  },
+  "keywords": [
+    "ionic2",
+    "angular2",
+    "alpha-scroll",
+    "component"
+  ],
+  "author": "Ross Martin <rmartin311@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rossmartin/ionic2-alpha-scroll/issues"
+  },
+  "homepage": "https://github.com/rossmartin/ionic2-alpha-scroll#readme",
+  "dependencies": {
+    "lodash": "^4.13.1"
+  },
+  "devDependencies": {
+    "@angular/core": "2.0.0-rc.3",
+    "ionic-angular": "2.0.0-beta.10",
+    "es6-promise": "^3.1.2",
+    "es6-shim": "^0.35.0",
+    "reflect-metadata": "^0.1.3",
+    "rxjs": "5.0.0-beta.6",
+    "typescript": "1.8.10",
+    "typings": "1.3.1",
+    "zone.js": "0.6.12"
+  }
+}
