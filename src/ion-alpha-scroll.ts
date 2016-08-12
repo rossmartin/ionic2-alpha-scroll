@@ -168,8 +168,8 @@ export class IonAlphaScroll {
 
   calculateDimensionsForSidebar() {
     return {
-      top: this._content.adjustedTop + 'px',
-      height: (this._content.getContentDimensions().contentHeight - this._content.adjustedTop - 70) + 'px'
+      top: this._content.contentTop + 'px',
+      height: (this._content.getContentDimensions().contentHeight - this._content.contentTop - 70) + 'px'
     }
   }
 
