@@ -147,7 +147,8 @@ export class IonAlphaScroll {
   ngOnChanges(changes: {[propertyName: string]: SimpleChange}) {
     let tmp = {};
     for (let i = 0; i < this.listData.length; i++) {
-      let letter = this.listData[i][this.key].toUpperCase().charAt(0);
+      let listValue: any = _.get(this.listData[i], this.key);
+      let letter = listValue.toUpperCase().charAt(0);
       if (typeof tmp[letter] === 'undefined') {
         tmp[letter] = [];
       }
