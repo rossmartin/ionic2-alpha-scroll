@@ -76,9 +76,9 @@ export class AlphaListPage {
   breeds: any;
   currentPageClass = this;
   alphaScrollItemTemplate: string = `
-    <div (click)="currentPageClass.onItemClick(item)">
+    <ion-item (click)="currentPageClass.onItemClick(item)">
       {{item.name}}
-    </div>
+    </ion-item>
   `;
   triggerAlphaScrollChange: number = 0;
 
