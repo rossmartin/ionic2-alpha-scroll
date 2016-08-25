@@ -125,9 +125,9 @@ export class IonAlphaScroll {
         <ion-list class="ion-alpha-list-outer">
           <div *ngFor="let items of ionAlphaScrollRef.sortedItems | mapToIterable; trackBy:ionAlphaScrollRef.trackBySortedItems">
             <ion-item-divider id="scroll-letter-{{items.key}}">{{items.key}}</ion-item-divider>
-            <ion-item *ngFor="let item of items.value">
+            <div *ngFor="let item of items.value">
               ${this.itemTemplate}
-            </ion-item>
+            </div>
           </div>
         </ion-list>
       </ion-scroll>
