@@ -14,7 +14,7 @@ import {
   ReflectiveInjector,
   SimpleChange
 } from '@angular/core';
-import { Content, Scroll } from 'ionic-angular';
+import { IonicModule, Content, Scroll } from 'ionic-angular';
 import * as _ from 'lodash';
 
 @Pipe({ name: 'mapToIterable' })
@@ -43,6 +43,7 @@ export class MapToIterable {
 export class DynamicHTMLOutlet {
 
   @Input() src: string;
+  @Input() styles: Array<string>;
   @Input() ionAlphaScrollRef: any;
   @Input() currentPageClass: any;
 
@@ -51,21 +52,25 @@ export class DynamicHTMLOutlet {
 
   ngOnChanges() {
     if (this.src) {
-      this.addComponent(this.src);
+      this.addComponent(this.src, this.styles);
     }
   }
 
-  private addComponent(template: string) {
+  private addComponent(template: string, styles: Array<string>) {
     @Component({
       selector: 'dynamic-html',
-      template: template
+      template: template,
+      styles: styles
     })
     class TemplateComponent {
       @Input() ionAlphaScrollRef: any;
       @Input() currentPageClass: any;
     }
 
-    @NgModule({declarations: [TemplateComponent]})
+    @NgModule({
+      imports: [IonicModule],
+      declarations: [TemplateComponent, MapToIterable]
+    })
     class TemplateModule {}
 
     let module = this.compiler.compileModuleAndAllComponentsSync(TemplateModule);
@@ -85,6 +90,7 @@ export class DynamicHTMLOutlet {
   template: `
     <dynamic-html-outlet
       [src]="alphaScrollTemplate"
+      [styles]="alphaScrollStyles"
       [ionAlphaScrollRef]="ionAlphaScrollRef"
       [currentPageClass]="currentPageClass">
     </dynamic-html-outlet>
@@ -99,6 +105,7 @@ export class Ionic2AlphaScroll {
   private _scrollEle: HTMLElement;
   sortedItems: any = {};
   alphabet: any = [];
+  alphaScrollStyles: Array<string>;
   alphaScrollTemplate: string;
   ionAlphaScrollRef = this;
 
@@ -106,9 +113,8 @@ export class Ionic2AlphaScroll {
   }
 
   ngOnInit() {
-    this.alphaScrollTemplate = `
-      <style>
-        .ion-alpha-sidebar {
+    this.alphaScrollStyles = [`
+      .ion-alpha-sidebar {
           position: fixed;
           right: 0;
           display: flex;
@@ -122,17 +128,18 @@ export class Ionic2AlphaScroll {
           width: 15px;
           text-align: center;
         }
-      </style>
+    `];
 
+    this.alphaScrollTemplate = `
       <ion-scroll class="ion-alpha-scroll" [ngStyle]="ionAlphaScrollRef.calculateScrollDimensions()" scrollX="false" scrollY="true">
-        <ion-list class="ion-alpha-list-outer">
+        <ion-item-group class="ion-alpha-list-outer">
           <div *ngFor="let items of ionAlphaScrollRef.sortedItems | mapToIterable; trackBy:ionAlphaScrollRef.trackBySortedItems">
             <ion-item-divider id="scroll-letter-{{items.key}}">{{items.key}}</ion-item-divider>
             <div *ngFor="let item of items.value">
               ${this.itemTemplate}
             </div>
           </div>
-        </ion-list>
+        </ion-item-group>
       </ion-scroll>
       <ul class="ion-alpha-sidebar" [ngStyle]="ionAlphaScrollRef.calculateDimensionsForSidebar()">
         <li *ngFor="let letter of ionAlphaScrollRef.alphabet" tappable (click)="ionAlphaScrollRef.alphaScrollGoToList(letter)">
@@ -142,7 +149,7 @@ export class Ionic2AlphaScroll {
     `;
 
     setTimeout(() => {
-      this._scrollEle = this._elementRef.nativeElement.querySelector('scroll-content');
+      this._scrollEle = this._elementRef.nativeElement.querySelector('.scroll-content');
       this.setupHammerHandlers();
     });
   }
