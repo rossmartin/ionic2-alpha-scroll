@@ -1,5 +1,7 @@
 import {
+  NgModule,
   Component,
+  Compiler,
   Host,
   Input,
   Pipe,
@@ -35,16 +37,6 @@ export class MapToIterable {
   }
 }
 
-@Component({
-  selector: 'dynamic-html',
-  inputs: ['src'],
-  template: `{{src}}`
-})
-export class DynamicHTML {
-  @Input() ionAlphaScrollRef: any;
-  @Input() currentPageClass: any;
-}
-
 @Directive({
   selector: 'dynamic-html-outlet',
 })
@@ -54,18 +46,38 @@ export class DynamicHTMLOutlet {
   @Input() ionAlphaScrollRef: any;
   @Input() currentPageClass: any;
 
-  constructor(private vcRef: ViewContainerRef, private resolver: ComponentFactoryResolver) {
+  constructor(private vcRef: ViewContainerRef, private resolver: ComponentFactoryResolver, private compiler: Compiler) {
   }
 
   ngOnChanges() {
-    if (!this.src) return;
+    if (this.src) {
+      this.addComponent(this.src);
+    }
+  }
 
-    let componentFactory = this.resolver.resolveComponentFactory(DynamicHTML);
-    let componentRef = this.vcRef.createComponent(componentFactory);
+  private addComponent(template: string) {
+    @Component({
+      selector: 'dynamic-html',
+      template: template
+    })
+    class TemplateComponent {
+      @Input() ionAlphaScrollRef: any;
+      @Input() currentPageClass: any;
+    }
 
+    @NgModule({declarations: [TemplateComponent]})
+    class TemplateModule {}
+
+    let module = this.compiler.compileModuleAndAllComponentsSync(TemplateModule);
+    let factory = module.componentFactories.find((comp) =>
+      comp.componentType === TemplateComponent
+    );
+
+    let componentRef = this.vcRef.createComponent(factory);
     componentRef.instance.ionAlphaScrollRef = this.ionAlphaScrollRef;
     componentRef.instance.currentPageClass = this.currentPageClass;
   }
+
 }
 
 @Component({
