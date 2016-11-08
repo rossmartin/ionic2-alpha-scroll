@@ -1,5 +1,7 @@
 {
+  "version": "2.0.3",
   "compilerOptions": {
+    "noImplicitAny": true,
     "module": "commonjs",
     "target": "es5",
     "emitDecoratorMetadata": true,
@@ -8,8 +10,11 @@
     "declaration": true
   },
   "files": [
-    "typings/index.d.ts",
     "src/ion-alpha-scroll.ts",
+    "src/module.ts",
     "src/index.ts"
-  ]
+  ],
+  "angularCompilerOptions": {
+    "genDir": "compiled"
+  }
 }

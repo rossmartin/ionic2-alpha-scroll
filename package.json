@@ -3,10 +3,8 @@
   "version": "1.0.4",
   "description": "Configurable Ionic 2 component for alphabetically indexed list with an alpha scroll bar.",
   "main": "index.js",
-  "typings": "./index.d.ts",
   "scripts": {
-    "install_typings": "typings install",
-    "prepublish": "typings install && tsc --outDir .",
+    "prepublish": "ngc && copyfiles -f src/*.js src/*.js.map src/*.d.ts src/*.metadata.json .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -25,19 +23,48 @@
     "url": "https://github.com/rossmartin/ionic2-alpha-scroll/issues"
   },
   "homepage": "https://github.com/rossmartin/ionic2-alpha-scroll#readme",
+  "files": [
+    "index.d.ts",
+    "index.js",
+    "index.js.map",
+    "index.metadata.json",
+    "src/index.ts",
+    "ion-alpha-scroll.d.ts",
+    "ion-alpha-scroll.js",
+    "ion-alpha-scroll.js.map",
+    "ion-alpha-scroll.metadata.json",
+    "module.js",
+    "module.js.map",
+    "module.d.ts",
+    "module.metadata.json",
+    "src/module.ts",
+    "src/ion-alpha-scroll.ts"
+  ],
   "dependencies": {
-    "lodash": "^4.13.1"
+    "@types/es6-shim": "^0.31.32",
+    "@types/hammerjs": "^2.0.33",
+    "@types/lodash": "^4.14.38",
+    "es6-shim": "^0.35.1",
+    "hammerjs": "^2.0.8",
+    "lodash": "^4.16.6"
   },
   "devDependencies": {
-    "@angular/core": "2.0.0-rc.4",
-    "@angular/forms": "0.2.0",
-    "ionic-angular": "2.0.0-beta.11",
+    "ionic-angular": "2.0.0-rc.2",
+    "@angular/common": "2.1.1",
+    "@angular/core": "2.1.1",
+    "@angular/forms": "2.1.1",
+    "@angular/compiler": "2.1.1",
+    "@angular/compiler-cli": "2.1.1",
+    "@angular/http": "2.1.1",
+    "@angular/platform-browser": "2.1.1",
+    "@angular/platform-browser-dynamic": "2.1.1",
+    "@angular/platform-server": "2.1.1",
     "es6-promise": "^3.1.2",
     "es6-shim": "^0.35.0",
     "reflect-metadata": "^0.1.3",
-    "rxjs": "5.0.0-beta.6",
-    "typescript": "1.8.10",
-    "typings": "1.3.1",
-    "zone.js": "0.6.12"
+    "rxjs": "5.0.0-beta.12",
+    "typescript": "^2.0.3",
+    "zone.js": "0.6.21",
+    "copyfiles": "1.0.0"
   }
 }

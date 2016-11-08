@@ -7,9 +7,8 @@ import {
   ViewChild,
   Directive,
   ViewContainerRef,
-  ComponentResolver,
-  ComponentMetadata,
   ComponentFactory,
+  ComponentFactoryResolver,
   ReflectiveInjector,
   SimpleChange
 } from '@angular/core';
@@ -17,9 +16,10 @@ import { Content, Scroll } from 'ionic-angular';
 import * as _ from 'lodash';
 
 @Pipe({ name: 'mapToIterable' })
-class MapToIterable {
-  transform(value) {
-    let result = [];
+export class MapToIterable {
+
+  transform(value: any) {
+    let result: Array<any> = [];
 
     if (value.entries) {
       for (var [key, value] of value.entries()) {
@@ -35,37 +35,36 @@ class MapToIterable {
   }
 }
 
-export function createComponentFactory(resolver: ComponentResolver, metadata: ComponentMetadata): Promise<ComponentFactory<any>> {
-    const cmpClass = class DynamicComponent {};
-    const decoratedCmp = Component(metadata)(cmpClass);
-    return resolver.resolveComponent(decoratedCmp);
+@Component({
+  selector: 'dynamic-html',
+  inputs: ['src'],
+  template: `{{src}}`
+})
+export class DynamicHTML {
+  @Input() ionAlphaScrollRef: any;
+  @Input() currentPageClass: any;
 }
 
 @Directive({
   selector: 'dynamic-html-outlet',
 })
 export class DynamicHTMLOutlet {
+
   @Input() src: string;
   @Input() ionAlphaScrollRef: any;
   @Input() currentPageClass: any;
 
-  constructor(private vcRef: ViewContainerRef, private resolver: ComponentResolver) {
+  constructor(private vcRef: ViewContainerRef, private resolver: ComponentFactoryResolver) {
   }
 
   ngOnChanges() {
     if (!this.src) return;
 
-    const metadata = new ComponentMetadata({
-      selector: 'dynamic-html',
-      template: this.src,
-      pipes: [MapToIterable]
-    });
-    createComponentFactory(this.resolver, metadata).then(factory => {
-      const injector = ReflectiveInjector.fromResolvedProviders([], this.vcRef.parentInjector);
-      let component = this.vcRef.createComponent(factory, 0, injector, []);
-      component.instance.ionAlphaScrollRef = this.ionAlphaScrollRef;
-      component.instance.currentPageClass = this.currentPageClass;
-    });
+    let componentFactory = this.resolver.resolveComponentFactory(DynamicHTML);
+    let componentRef = this.vcRef.createComponent(componentFactory);
+
+    componentRef.instance.ionAlphaScrollRef = this.ionAlphaScrollRef;
+    componentRef.instance.currentPageClass = this.currentPageClass;
   }
 }
 
@@ -77,11 +76,9 @@ export class DynamicHTMLOutlet {
       [ionAlphaScrollRef]="ionAlphaScrollRef"
       [currentPageClass]="currentPageClass">
     </dynamic-html-outlet>
-  `,
-  pipes: [MapToIterable],
-  directives: [DynamicHTMLOutlet]
+  `
 })
-export class IonAlphaScroll {
+export class Ionic2AlphaScroll {
   @Input() listData: any;
   @Input() key: string;
   @Input() itemTemplate: string;
@@ -93,13 +90,7 @@ export class IonAlphaScroll {
   alphaScrollTemplate: string;
   ionAlphaScrollRef = this;
 
-  constructor(
-    @Host() private _content: Content,
-    private _elementRef: ElementRef,
-    private vcRef: ViewContainerRef,
-    private resolver: ComponentResolver
-  ) {
-
+  constructor(@Host() private _content: Content, private _elementRef: ElementRef, private vcRef: ViewContainerRef) {
   }
 
   ngOnInit() {
@@ -145,7 +136,7 @@ export class IonAlphaScroll {
   }
 
   ngOnChanges(changes: {[propertyName: string]: SimpleChange}) {
-    let tmp = {};
+    let tmp: any = {};
     for (let i = 0; i < this.listData.length; i++) {
       let listValue: any = _.get(this.listData[i], this.key);
       let letter = listValue.toUpperCase().charAt(0);
@@ -174,16 +165,16 @@ export class IonAlphaScroll {
     }
   }
 
-  alphaScrollGoToList(letter) {
+  alphaScrollGoToList(letter: any) {
     let ele: any = this._elementRef.nativeElement.querySelector(`#scroll-letter-${letter}`);
     let offsetY = ele.offsetTop;
     this._scrollEle.scrollTop = offsetY;
   }
 
   // create alphabet object
-  iterateAlphabet(alphabet) {
+  iterateAlphabet(alphabet: any) {
     let str = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    let numbers = [];
+    let numbers: Array<any> = [];
 
     if (Object.keys(alphabet).length > 0) {
       str = '';
@@ -210,7 +201,7 @@ export class IonAlphaScroll {
       ]
     });
 
-    mcHammer.on('panup pandown', _.throttle((e) => {
+    mcHammer.on('panup pandown', _.throttle((e: any) => {
       let closestEle: any = document.elementFromPoint(e.center.x, e.center.y);
       if (closestEle && ['LI', 'A'].indexOf(closestEle.tagName) > -1) {
         let letter = closestEle.innerText;
@@ -222,7 +213,7 @@ export class IonAlphaScroll {
     }, 50 ));
   }
 
-  trackBySortedItems(index: number, item: any) {
+  trackBySortedItems(index: number, item: any): number {
     return index;
   }
 
