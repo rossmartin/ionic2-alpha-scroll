@@ -1,11 +1,17 @@
 {
   "version": "2.0.3",
   "compilerOptions": {
-    "noImplicitAny": true,
-    "module": "commonjs",
-    "target": "es5",
+    "allowSyntheticDefaultImports": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "lib": [
+      "dom",
+      "es2015"
+    ],
+    "module": "es2015",
+    "moduleResolution": "node",
+    "target": "es5",
+    "noImplicitAny": true,
     "sourceMap": true,
     "declaration": true
   },
