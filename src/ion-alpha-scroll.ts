@@ -74,9 +74,7 @@ export class DynamicHTMLOutlet {
     class TemplateModule {}
 
     let module = this.compiler.compileModuleAndAllComponentsSync(TemplateModule);
-    let factory = module.componentFactories.find((comp) =>
-      comp.componentType === TemplateComponent
-    );
+    let factory = _.find(module.componentFactories, comp => comp.componentType === TemplateComponent);
 
     let componentRef = this.vcRef.createComponent(factory);
     componentRef.instance.ionAlphaScrollRef = this.ionAlphaScrollRef;
@@ -96,7 +94,7 @@ export class DynamicHTMLOutlet {
     </dynamic-html-outlet>
   `
 })
-export class Ionic2AlphaScroll {
+export class IonAlphaScroll {
   @Input() listData: any;
   @Input() key: string;
   @Input() itemTemplate: string;

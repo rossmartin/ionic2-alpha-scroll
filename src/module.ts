@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
-import { DynamicHTMLOutlet, Ionic2AlphaScroll } from './ion-alpha-scroll';
+import { DynamicHTMLOutlet, IonAlphaScroll } from './ion-alpha-scroll';
 
 @NgModule({
-  declarations: [DynamicHTMLOutlet, Ionic2AlphaScroll],
-  exports: [Ionic2AlphaScroll]
+  declarations: [DynamicHTMLOutlet, IonAlphaScroll],
+  exports: [IonAlphaScroll]
 })
-export class Ionic2AlphaScrollModule {}
+export class IonAlphaScrollModule {}
