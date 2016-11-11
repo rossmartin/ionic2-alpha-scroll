@@ -11,17 +11,37 @@ Configurable Ionic 2 component for alphabetically indexed list with an alpha scr
     npm install ionic2-alpha-scroll --save
     ```
 
-2. Import the ionic2-alpha-scroll component for your page and add it to your page's directives.
+1. Add the ionic2-alpha-scroll component to your app.
 
-    ```javascript
-    import { IonAlphaScroll } from 'ionic2-alpha-scroll';
+  ###### RC0 and and higher -
 
-    @Component({
-      templateUrl: 'build/pages/alpha-list/alpha-list.html',
-      directives: [IonAlphaScroll]
-    })
-    export class AlphaListPage { }
-    ```
+  ```javascript
+  import { IonAlphaScrollModule } from 'ionic2-alpha-scroll';
+
+  @NgModule({
+    declarations: [
+      MyApp,
+      // .....
+    ],
+    imports: [
+      IonicModule.forRoot(MyApp),
+      IonAlphaScrollModule
+    ],
+    /// ....
+  })
+  ```
+
+  ###### Pre RC0 -
+
+  ```javascript
+  import { IonAlphaScroll } from 'ionic2-alpha-scroll';
+
+  @Component({
+    templateUrl: 'build/pages/alpha-list/alpha-list.html',
+    directives: [IonAlphaScroll]
+  })
+  export class AlphaListPage { }
+  ```
 
 ## Demo
 [Here is a sample Ionic 2 app on GitHub that shows how to use this component](https://github.com/rossmartin/ionic2-alpha-scroll-example)
