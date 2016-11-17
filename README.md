@@ -69,10 +69,8 @@ To use the `ion-alpha-scroll` component add this below to the `<ion-content>` in
 Heres a quick example:
 
 ```javascript
-import { IonAlphaScroll } from 'ionic2-alpha-scroll';
-
-
 @Component({
+  selector: 'alpha-list-page',
   template: `
     <ion-header>
       <ion-navbar>
@@ -89,8 +87,7 @@ import { IonAlphaScroll } from 'ionic2-alpha-scroll';
         [triggerChange]="triggerAlphaScrollChange">
       </ion-alpha-scroll>
     </ion-content>
-  `,
-  directives: [IonAlphaScroll]
+  `
 })
 export class AlphaListPage {
   breeds: any;
