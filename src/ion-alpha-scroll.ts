@@ -50,7 +50,7 @@ export class DynamicHTMLOutlet {
   constructor(private vcRef: ViewContainerRef, private resolver: ComponentFactoryResolver, private compiler: Compiler) {
   }
 
-  ngOnChanges() {
+  ngOnChanges(changes: {[propertyName: string]: SimpleChange}) {
     if (this.src) {
       this.addComponent(this.src, this.styles);
     }
