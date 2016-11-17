@@ -129,7 +129,7 @@ export class AlphaListPage {
 If you would like to disable the scroll bar for the `ion-alpha-scroll` `scroll-content` use this CSS:
 
 ```css
-.ion-alpha-scroll scroll-content::-webkit-scrollbar {
+.ion-alpha-scroll .scroll-content::-webkit-scrollbar {
   display: none;
 }
 ```
