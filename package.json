@@ -1,6 +1,6 @@
 {
   "name": "ionic2-alpha-scroll",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Configurable Ionic 2 component for alphabetically indexed list with an alpha scroll bar.",
   "main": "index.js",
   "scripts": {
