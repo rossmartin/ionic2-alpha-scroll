@@ -14,7 +14,21 @@ Configurable Ionic 2 component for alphabetically indexed list with an alpha scr
 1. Add the ionic2-alpha-scroll component to your app.
 
   ###### RC0 and and higher -
+  Update your `src/app/main.prod.ts` to include `COMPILER_PROVIDERS`.
+  ```javascript
+  import { platformBrowser } from '@angular/platform-browser';
+  import { enableProdMode } from '@angular/core';
+  import { COMPILER_PROVIDERS } from '@angular/compiler'; // import this
 
+  import { AppModuleNgFactory } from './app.module.ngfactory';
+
+    enableProdMode();
+    platformBrowser([
+      COMPILER_PROVIDERS // dynamic content project used by ionic2-alpha-scroll needs this
+    ]).bootstrapModuleFactory(AppModuleNgFactory);
+  ```
+
+  Include the following on your `src/app/app.module.ts`.
   ```javascript
   import { IonAlphaScrollModule } from 'ionic2-alpha-scroll';
   import { DynamicComponentModule } from 'ng-dynamic'; // used by ionic2-alpha-scroll for dynamic content projection
