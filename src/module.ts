@@ -9,10 +9,11 @@ import { DynamicComponentModule } from 'ng-dynamic';
     IonicModule,
     CommonModule,
     DynamicComponentModule.forRoot({
-      imports: [CommonModule, IonicModule]
+      imports: [CommonModule, IonicModule],
+      declarations: [MapToIterable]
     })
   ],
-  declarations: [IonAlphaScroll, MapToIterable],
+  declarations: [IonAlphaScroll],
   exports: [IonAlphaScroll]
 })
 export class IonAlphaScrollModule {}

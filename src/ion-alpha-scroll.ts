@@ -34,38 +34,8 @@ export class MapToIterable {
 @Component({
   selector: 'ion-alpha-scroll',
   template: `
-    <ion-scroll class="ion-alpha-scroll" [ngStyle]="ionAlphaScrollRef.calculateScrollDimensions()" scrollX="false" scrollY="true">
-      <ion-item-group class="ion-alpha-list-outer">
-        <div *ngFor="let items of ionAlphaScrollRef.sortedItems | mapToIterable; trackBy:ionAlphaScrollRef.trackBySortedItems">
-          <ion-item-divider id="scroll-letter-{{items.key}}">{{items.key}}</ion-item-divider>
-          <div *ngFor="let item of items.value">
-            <div *dynamicComponent="itemTemplate; context: {item: item, currentPageClass: currentPageClass};"></div>
-          </div>
-        </div>
-      </ion-item-group>
-    </ion-scroll>
-    <ul class="ion-alpha-sidebar" [ngStyle]="ionAlphaScrollRef.calculateDimensionsForSidebar()">
-      <li *ngFor="let letter of ionAlphaScrollRef.alphabet" tappable (click)="ionAlphaScrollRef.alphaScrollGoToList(letter)">
-        <a>{{letter}}</a>
-      </li>
-    </ul>
-  `,
-  styles: [`
-    .ion-alpha-sidebar {
-        position: fixed;
-        right: 0;
-        display: flex;
-        flex-flow: column;
-        z-index: 50000;
-      }
-
-      .ion-alpha-sidebar li {
-        flex: 1 1 auto;
-        list-style: none;
-        width: 15px;
-        text-align: center;
-      }
-  `]
+    <div *dynamicComponent="alphaScrollTemplate; context: ionAlphaScrollRef;"></div>
+  `
 })
 export class IonAlphaScroll {
   @Input() listData: any;
@@ -77,11 +47,47 @@ export class IonAlphaScroll {
   sortedItems: any = {};
   alphabet: any = [];
   ionAlphaScrollRef = this;
+  alphaScrollTemplate: string;
 
   constructor(@Host() private _content: Content, private _elementRef: ElementRef, private vcRef: ViewContainerRef) {
   }
 
   ngOnInit() {
+    this.alphaScrollTemplate = `
+      <style>
+        .ion-alpha-sidebar {
+          position: fixed;
+          right: 0;
+          display: flex;
+          flex-flow: column;
+          z-index: 50000;
+        }
+
+        .ion-alpha-sidebar li {
+          flex: 1 1 auto;
+          list-style: none;
+          width: 15px;
+          text-align: center;
+        }
+      </style>
+      
+      <ion-scroll class="ion-alpha-scroll" [ngStyle]="ionAlphaScrollRef.calculateScrollDimensions()" scrollX="false" scrollY="true">
+        <ion-item-group class="ion-alpha-list-outer">
+          <div *ngFor="let items of ionAlphaScrollRef.sortedItems | mapToIterable; trackBy:ionAlphaScrollRef.trackBySortedItems">
+            <ion-item-divider id="scroll-letter-{{items.key}}">{{items.key}}</ion-item-divider>
+            <div *ngFor="let item of items.value">
+              ${this.itemTemplate}
+            </div>
+          </div>
+        </ion-item-group>
+      </ion-scroll>
+      <ul class="ion-alpha-sidebar" [ngStyle]="ionAlphaScrollRef.calculateDimensionsForSidebar()">
+        <li *ngFor="let letter of ionAlphaScrollRef.alphabet" tappable (click)="ionAlphaScrollRef.alphaScrollGoToList(letter)">
+        <a>{{letter}}</a>
+        </li>
+      </ul>
+   `;
+
     setTimeout(() => {
       this._scrollEle = this._elementRef.nativeElement.querySelector('.scroll-content');
       this.setupHammerHandlers();
@@ -146,6 +152,8 @@ export class IonAlphaScroll {
 
   setupHammerHandlers() {
     let sidebarEle: HTMLElement = this._elementRef.nativeElement.querySelector('.ion-alpha-sidebar');
+
+    if (!sidebarEle) return;
 
     let mcHammer = new Hammer(sidebarEle, {
       recognizers: [
