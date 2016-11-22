@@ -17,17 +17,19 @@ Configurable Ionic 2 component for alphabetically indexed list with an alpha scr
 
   ```javascript
   import { IonAlphaScrollModule } from 'ionic2-alpha-scroll';
+  import { DynamicComponentModule } from 'ng-dynamic'; // used by ionic2-alpha-scroll for dynamic content projection
 
   @NgModule({
     declarations: [
       MyApp,
-      // .....
+      ...
     ],
     imports: [
       IonicModule.forRoot(MyApp),
-      IonAlphaScrollModule
+      IonAlphaScrollModule,
+      DynamicComponentModule
     ],
-    /// ....
+    ...
   })
   ```
 
