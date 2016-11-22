@@ -42,7 +42,8 @@
   ],
   "dependencies": {
     "@types/hammerjs": "^2.0.33",
-    "@types/lodash": "^4.14.38"
+    "@types/lodash": "^4.14.38",
+    "ng-dynamic": "^1.1.0"
   },
   "devDependencies": {
     "ionic-angular": "2.0.0-rc.2",

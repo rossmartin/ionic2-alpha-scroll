@@ -1,8 +1,18 @@
 import { NgModule } from '@angular/core';
-import { DynamicHTMLOutlet, IonAlphaScroll } from './ion-alpha-scroll';
+import { CommonModule } from '@angular/common';
+import { IonicModule } from 'ionic-angular';
+import { IonAlphaScroll, MapToIterable } from './ion-alpha-scroll';
+import { DynamicComponentModule } from 'ng-dynamic';
 
 @NgModule({
-  declarations: [DynamicHTMLOutlet, IonAlphaScroll],
+  imports: [
+    IonicModule,
+    CommonModule,
+    DynamicComponentModule.forRoot({
+      imports: [CommonModule, IonicModule]
+    })
+  ],
+  declarations: [IonAlphaScroll, MapToIterable],
   exports: [IonAlphaScroll]
 })
 export class IonAlphaScrollModule {}

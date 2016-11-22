@@ -1,20 +1,14 @@
 import {
-  NgModule,
   Component,
-  Compiler,
   Host,
   Input,
   Pipe,
   ElementRef,
   ViewChild,
-  Directive,
   ViewContainerRef,
-  ComponentFactory,
-  ComponentFactoryResolver,
-  ReflectiveInjector,
   SimpleChange
 } from '@angular/core';
-import { IonicModule, Content, Scroll } from 'ionic-angular';
+import { Content, Scroll } from 'ionic-angular';
 import * as _ from 'lodash';
 
 @Pipe({ name: 'mapToIterable' })
@@ -37,62 +31,41 @@ export class MapToIterable {
   }
 }
 
-@Directive({
-  selector: 'dynamic-html-outlet',
-})
-export class DynamicHTMLOutlet {
-
-  @Input() src: string;
-  @Input() styles: Array<string>;
-  @Input() ionAlphaScrollRef: any;
-  @Input() currentPageClass: any;
-
-  constructor(private vcRef: ViewContainerRef, private resolver: ComponentFactoryResolver, private compiler: Compiler) {
-  }
-
-  ngOnChanges(changes: {[propertyName: string]: SimpleChange}) {
-    if (this.src) {
-      this.addComponent(this.src, this.styles);
-    }
-  }
-
-  private addComponent(template: string, styles: Array<string>) {
-    @Component({
-      selector: 'dynamic-html',
-      template: template,
-      styles: styles
-    })
-    class TemplateComponent {
-      @Input() ionAlphaScrollRef: any;
-      @Input() currentPageClass: any;
-    }
-
-    @NgModule({
-      imports: [IonicModule],
-      declarations: [TemplateComponent, MapToIterable]
-    })
-    class TemplateModule {}
-
-    let module = this.compiler.compileModuleAndAllComponentsSync(TemplateModule);
-    let factory = _.find(module.componentFactories, comp => comp.componentType === TemplateComponent);
-
-    let componentRef = this.vcRef.createComponent(factory);
-    componentRef.instance.ionAlphaScrollRef = this.ionAlphaScrollRef;
-    componentRef.instance.currentPageClass = this.currentPageClass;
-  }
-
-}
-
 @Component({
   selector: 'ion-alpha-scroll',
   template: `
-    <dynamic-html-outlet
-      [src]="alphaScrollTemplate"
-      [styles]="alphaScrollStyles"
-      [ionAlphaScrollRef]="ionAlphaScrollRef"
-      [currentPageClass]="currentPageClass">
-    </dynamic-html-outlet>
-  `
+    <ion-scroll class="ion-alpha-scroll" [ngStyle]="ionAlphaScrollRef.calculateScrollDimensions()" scrollX="false" scrollY="true">
+      <ion-item-group class="ion-alpha-list-outer">
+        <div *ngFor="let items of ionAlphaScrollRef.sortedItems | mapToIterable; trackBy:ionAlphaScrollRef.trackBySortedItems">
+          <ion-item-divider id="scroll-letter-{{items.key}}">{{items.key}}</ion-item-divider>
+          <div *ngFor="let item of items.value">
+            <div *dynamicComponent="itemTemplate; context: {item: item, currentPageClass: currentPageClass};"></div>
+          </div>
+        </div>
+      </ion-item-group>
+    </ion-scroll>
+    <ul class="ion-alpha-sidebar" [ngStyle]="ionAlphaScrollRef.calculateDimensionsForSidebar()">
+      <li *ngFor="let letter of ionAlphaScrollRef.alphabet" tappable (click)="ionAlphaScrollRef.alphaScrollGoToList(letter)">
+        <a>{{letter}}</a>
+      </li>
+    </ul>
+  `,
+  styles: [`
+    .ion-alpha-sidebar {
+        position: fixed;
+        right: 0;
+        display: flex;
+        flex-flow: column;
+        z-index: 50000;
+      }
+
+      .ion-alpha-sidebar li {
+        flex: 1 1 auto;
+        list-style: none;
+        width: 15px;
+        text-align: center;
+      }
+  `]
 })
 export class IonAlphaScroll {
   @Input() listData: any;
@@ -103,49 +76,12 @@ export class IonAlphaScroll {
   private _scrollEle: HTMLElement;
   sortedItems: any = {};
   alphabet: any = [];
-  alphaScrollStyles: Array<string>;
-  alphaScrollTemplate: string;
   ionAlphaScrollRef = this;
 
   constructor(@Host() private _content: Content, private _elementRef: ElementRef, private vcRef: ViewContainerRef) {
   }
 
   ngOnInit() {
-    this.alphaScrollStyles = [`
-      .ion-alpha-sidebar {
-          position: fixed;
-          right: 0;
-          display: flex;
-          flex-flow: column;
-          z-index: 50000;
-        }
-
-        .ion-alpha-sidebar li {
-          flex: 1 1 auto;
-          list-style: none;
-          width: 15px;
-          text-align: center;
-        }
-    `];
-
-    this.alphaScrollTemplate = `
-      <ion-scroll class="ion-alpha-scroll" [ngStyle]="ionAlphaScrollRef.calculateScrollDimensions()" scrollX="false" scrollY="true">
-        <ion-item-group class="ion-alpha-list-outer">
-          <div *ngFor="let items of ionAlphaScrollRef.sortedItems | mapToIterable; trackBy:ionAlphaScrollRef.trackBySortedItems">
-            <ion-item-divider id="scroll-letter-{{items.key}}">{{items.key}}</ion-item-divider>
-            <div *ngFor="let item of items.value">
-              ${this.itemTemplate}
-            </div>
-          </div>
-        </ion-item-group>
-      </ion-scroll>
-      <ul class="ion-alpha-sidebar" [ngStyle]="ionAlphaScrollRef.calculateDimensionsForSidebar()">
-        <li *ngFor="let letter of ionAlphaScrollRef.alphabet" tappable (click)="ionAlphaScrollRef.alphaScrollGoToList(letter)">
-          <a>{{letter}}</a>
-        </li>
-      </ul>
-    `;
-
     setTimeout(() => {
       this._scrollEle = this._elementRef.nativeElement.querySelector('.scroll-content');
       this.setupHammerHandlers();
