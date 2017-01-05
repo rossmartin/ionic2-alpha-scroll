@@ -70,7 +70,7 @@ export class IonAlphaScroll {
           text-align: center;
         }
       </style>
-      
+
       <ion-scroll class="ion-alpha-scroll" [ngStyle]="ionAlphaScrollRef.calculateScrollDimensions()" scrollX="false" scrollY="true">
         <ion-item-group class="ion-alpha-list-outer">
           <div *ngFor="let items of ionAlphaScrollRef.sortedItems | mapToIterable; trackBy:ionAlphaScrollRef.trackBySortedItems">
@@ -112,7 +112,7 @@ export class IonAlphaScroll {
   calculateScrollDimensions() {
     let dimensions = this._content.getContentDimensions();
     return {
-      height: dimensions.scrollHeight + 'px',
+      height: dimensions.contentHeight + 'px',
       width: (dimensions.contentWidth - 20) + 'px'
     };
   }
