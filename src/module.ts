@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from 'ionic-angular';
-import { IonAlphaScroll, MapToIterable } from './ion-alpha-scroll';
+import { IonAlphaScroll } from './ion-alpha-scroll';
+import { UtilModule } from './util-module';
 import { DynamicComponentModule } from 'ng-dynamic';
 
 @NgModule({
@@ -9,8 +10,8 @@ import { DynamicComponentModule } from 'ng-dynamic';
     IonicModule,
     CommonModule,
     DynamicComponentModule.forRoot({
-      imports: [CommonModule, IonicModule],
-      declarations: [MapToIterable]
+      imports: [CommonModule, IonicModule, UtilModule],
+      declarations: []
     })
   ],
   declarations: [IonAlphaScroll],

@@ -1,5 +1,4 @@
 {
-  "version": "2.0.3",
   "compilerOptions": {
     "allowUnreachableCode": false,
     "declaration": true,
@@ -15,6 +14,8 @@
   },
   "files": [
     "src/ion-alpha-scroll.ts",
+    "src/map-to-iterable.ts",
+    "src/util-module.ts",
     "src/module.ts",
     "src/index.ts"
   ],

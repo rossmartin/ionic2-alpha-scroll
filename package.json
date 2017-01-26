@@ -38,7 +38,13 @@
     "module.d.ts",
     "module.metadata.json",
     "src/module.ts",
-    "src/ion-alpha-scroll.ts"
+    "src/ion-alpha-scroll.ts",
+    "map-to-iterable.d.ts",
+    "map-to-iterable.js",
+    "map-to-iterable.js.map",
+    "util-module.d.ts",
+    "util-module.js",
+    "util-module.js.map"
   ],
   "dependencies": {
     "@types/hammerjs": "^2.0.33",

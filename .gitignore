@@ -14,6 +14,14 @@ module.js
 module.js.map
 module.d.ts
 
+map-to-iterable.js
+map-to-iterable.js.map
+map-to-iterable.d.ts
+
+util-module.js
+util-module.js.map
+util-module.d.ts
+
 *.spec.js
 *.spec.js.map
 *.spec.d.ts
