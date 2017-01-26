@@ -13,25 +13,9 @@ Configurable Ionic 2 component for alphabetically indexed list with an alpha scr
 
 1. Add the ionic2-alpha-scroll component to your app.
 
-  ###### RC0 and and higher -
-  Update your `src/app/main.prod.ts` to include `COMPILER_PROVIDERS`.
-  ```javascript
-  import { platformBrowser } from '@angular/platform-browser';
-  import { enableProdMode } from '@angular/core';
-  import { COMPILER_PROVIDERS } from '@angular/compiler'; // import this
-
-  import { AppModuleNgFactory } from './app.module.ngfactory';
-
-    enableProdMode();
-    platformBrowser([
-      COMPILER_PROVIDERS // dynamic content project used by ionic2-alpha-scroll needs this
-    ]).bootstrapModuleFactory(AppModuleNgFactory);
-  ```
-
   Include the following on your `src/app/app.module.ts`.
   ```javascript
   import { IonAlphaScrollModule } from 'ionic2-alpha-scroll';
-  import { DynamicComponentModule } from 'ng-dynamic'; // used by ionic2-alpha-scroll for dynamic content projection
 
   @NgModule({
     declarations: [
@@ -40,24 +24,15 @@ Configurable Ionic 2 component for alphabetically indexed list with an alpha scr
     ],
     imports: [
       IonicModule.forRoot(MyApp),
-      IonAlphaScrollModule,
-      DynamicComponentModule
+      IonAlphaScrollModule
     ],
     ...
   })
   ```
 
-  ###### Pre RC0 -
+  ### KNOWN ISSUE - I cannot get AoT compiling to work currently.  I am looking into how to make this possible with the Ionic 2.0.0 stable release.  If anyone knows how to make it compatible with AoT please submit a pull request.  
 
-  ```javascript
-  import { IonAlphaScroll } from 'ionic2-alpha-scroll';
-
-  @Component({
-    templateUrl: 'build/pages/alpha-list/alpha-list.html',
-    directives: [IonAlphaScroll]
-  })
-  export class AlphaListPage { }
-  ```
+  ### This means you cannot run `ionic build ios --prod` because that will use AoT compiling.  Unfortunately you will have to use `ionic build ios` and omit the AoT compiling to use this component.
 
 ## Demo
 [Here is a sample Ionic 2 app on GitHub that shows how to use this component](https://github.com/rossmartin/ionic2-alpha-scroll-example)
