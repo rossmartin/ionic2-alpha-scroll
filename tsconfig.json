@@ -1,19 +1,17 @@
 {
   "version": "2.0.3",
   "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
+    "allowUnreachableCode": false,
+    "declaration": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
-    "lib": [
-      "dom",
-      "es2015"
-    ],
-    "module": "es2015",
+    "lib": ["dom", "es2015"],
+    "module": "commonjs",
     "moduleResolution": "node",
-    "target": "es5",
-    "noImplicitAny": true,
+    "noImplicitAny": false,
+    "removeComments": false,
     "sourceMap": true,
-    "declaration": true
+    "target": "es5"
   },
   "files": [
     "src/ion-alpha-scroll.ts",
@@ -21,6 +19,8 @@
     "src/index.ts"
   ],
   "angularCompilerOptions": {
+    "annotationsAs": "static fields",
+    "annotateForClosureCompiler": true,
     "genDir": "compiled"
   }
 }
