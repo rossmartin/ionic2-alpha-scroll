@@ -14,7 +14,7 @@
   },
   "files": [
     "src/ion-alpha-scroll.ts",
-    "src/map-to-iterable.ts",
+    "src/util-classes.ts",
     "src/util-module.ts",
     "src/module.ts",
     "src/index.ts"

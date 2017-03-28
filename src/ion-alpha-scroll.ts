@@ -7,6 +7,7 @@ import {
   ViewContainerRef,
   SimpleChange
 } from '@angular/core';
+import { CSSEscape } from './util-classes';
 import { Content, Scroll } from 'ionic-angular';
 import * as _ from 'lodash';
 
@@ -104,8 +105,9 @@ export class IonAlphaScroll {
   }
 
   alphaScrollGoToList(letter: any) {
-    let ele: any = this._elementRef.nativeElement.querySelector(`#scroll-letter-${letter}`);
-    let offsetY = ele.offsetTop;
+    const selector = '#scroll-letter-' + CSSEscape.escape(letter);
+    const ele: any = this._elementRef.nativeElement.querySelector(selector);
+    const offsetY = ele.offsetTop;
     this._scrollEle.scrollTop = offsetY;
   }
 
@@ -142,10 +144,11 @@ export class IonAlphaScroll {
     });
 
     mcHammer.on('panup pandown', _.throttle((e: any) => {
-      let closestEle: any = document.elementFromPoint(e.center.x, e.center.y);
+      const closestEle: any = document.elementFromPoint(e.center.x, e.center.y);
       if (closestEle && ['LI', 'A'].indexOf(closestEle.tagName) > -1) {
-        let letter = closestEle.innerText;
-        let letterDivider: any = this._elementRef.nativeElement.querySelector(`#scroll-letter-${letter}`);
+        const letter = closestEle.innerText;
+        const selector = '#scroll-letter-' + CSSEscape.escape(letter);
+        const letterDivider: any = this._elementRef.nativeElement.querySelector(selector);
         if (letterDivider) {
           this._scrollEle.scrollTop = letterDivider.offsetTop;
         }

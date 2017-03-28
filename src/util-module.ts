@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { MapToIterable } from './map-to-iterable';
+import { MapToIterable } from './util-classes';
 
 @NgModule({
   imports: [],
