@@ -18,6 +18,9 @@ map-to-iterable.js
 map-to-iterable.js.map
 map-to-iterable.d.ts
 
+util-classes.js
+util-classes.js.map
+
 util-module.js
 util-module.js.map
 util-module.d.ts
@@ -25,6 +28,9 @@ util-module.d.ts
 *.spec.js
 *.spec.js.map
 *.spec.d.ts
+
+*.ngfactory.*
+*.ngsummary.json
 
 # ngc
 /compiled

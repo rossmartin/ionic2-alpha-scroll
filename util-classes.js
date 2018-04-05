@@ -1,16 +1,23 @@
 "use strict";
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes} checked by tsc
+ */
+Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
-var MapToIterable = (function () {
+var MapToIterable = /** @class */ (function () {
     function MapToIterable() {
     }
-    MapToIterable.prototype.transform = function (value) {
-        var result = [];
+    /**
+     * @param {?} value
+     * @return {?}
+     */
+    MapToIterable.prototype.transform = /**
+     * @param {?} value
+     * @return {?}
+     */
+    function (value) {
+        var /** @type {?} */ result = [];
         if (value.entries) {
             for (var _i = 0, _a = value.entries(); _i < _a.length; _i++) {
                 var _b = _a[_i], key = _b[0], value = _b[1];
@@ -18,29 +25,46 @@ var MapToIterable = (function () {
             }
         }
         else {
-            for (var key_1 in value) {
+            for (var /** @type {?} */ key_1 in value) {
                 result.push({ key: key_1, value: value[key_1] });
             }
         }
         return result;
     };
+    MapToIterable.decorators = [
+        { type: core_1.Pipe, args: [{ name: 'mapToIterable' },] },
+    ];
     return MapToIterable;
 }());
-MapToIterable = __decorate([
-    core_1.Pipe({ name: 'mapToIterable' })
-], MapToIterable);
 exports.MapToIterable = MapToIterable;
-var CSSEscape = (function () {
+function MapToIterable_tsickle_Closure_declarations() {
+    /** @type {!Array<{type: !Function, args: (undefined|!Array<?>)}>} */
+    MapToIterable.decorators;
+    /**
+     * @nocollapse
+     * @type {function(): !Array<(null|{type: ?, decorators: (undefined|!Array<{type: !Function, args: (undefined|!Array<?>)}>)})>}
+     */
+    MapToIterable.ctorParameters;
+}
+var CSSEscape = /** @class */ (function () {
     function CSSEscape() {
     }
     /*! https://mths.be/cssescape v1.5.1 by @mathias | MIT license */
-    CSSEscape.escape = function (value) {
-        var string = String(value);
-        var length = string.length;
-        var index = -1;
-        var codeUnit;
-        var result = '';
-        var firstCodeUnit = string.charCodeAt(0);
+    /**
+     * @param {?} value
+     * @return {?}
+     */
+    CSSEscape.escape = /**
+     * @param {?} value
+     * @return {?}
+     */
+    function (value) {
+        var /** @type {?} */ string = String(value);
+        var /** @type {?} */ length = string.length;
+        var /** @type {?} */ index = -1;
+        var /** @type {?} */ codeUnit;
+        var /** @type {?} */ result = '';
+        var /** @type {?} */ firstCodeUnit = string.charCodeAt(0);
         while (++index < length) {
             codeUnit = string.charCodeAt(index);
             // Note: there’s no need to special-case astral symbols, surrogate
