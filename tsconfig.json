@@ -10,14 +10,16 @@
     "noImplicitAny": false,
     "removeComments": false,
     "sourceMap": true,
-    "target": "es5"
+    "target": "es5",
+    "outDir": "dist",
+    "rootDir": "src",
   },
-  "files": [
-    "src/ion-alpha-scroll.ts",
-    "src/util-classes.ts",
-    "src/util-module.ts",
-    "src/module.ts",
-    "src/index.ts"
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
   ],
   "angularCompilerOptions": {
     "annotationsAs": "static fields",

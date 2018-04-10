@@ -2,9 +2,12 @@
   "name": "ionic2-alpha-scroll",
   "version": "1.1.2",
   "description": "Configurable Ionic 2 component for alphabetically indexed list with an alpha scroll bar.",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
   "scripts": {
-    "prepublish": "ngc && copyfiles -f src/*.js src/*.js.map src/*.d.ts src/*.metadata.json .",
+    "build": "rm -rf dist && ngc",
+    "build-win": "rmdir /Q /S dist && ngc",
+    "prepublish": "ngc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -23,29 +26,6 @@
     "url": "https://github.com/rossmartin/ionic2-alpha-scroll/issues"
   },
   "homepage": "https://github.com/rossmartin/ionic2-alpha-scroll#readme",
-  "files": [
-    "index.d.ts",
-    "index.js",
-    "index.js.map",
-    "index.metadata.json",
-    "src/index.ts",
-    "ion-alpha-scroll.d.ts",
-    "ion-alpha-scroll.js",
-    "ion-alpha-scroll.js.map",
-    "ion-alpha-scroll.metadata.json",
-    "module.js",
-    "module.js.map",
-    "module.d.ts",
-    "module.metadata.json",
-    "src/module.ts",
-    "src/ion-alpha-scroll.ts",
-    "util-classes.d.ts",
-    "util-classes.js",
-    "util-classes.js.map",
-    "util-module.d.ts",
-    "util-module.js",
-    "util-module.js.map"
-  ],
   "dependencies": {
     "@types/hammerjs": "^2.0.33",
     "@types/lodash": "^4.14.106",
