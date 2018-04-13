@@ -1,8 +1,10 @@
 # Node generated files
+src
 node_modules
-npm-debug.log
-# OS generated files
-Thumbs.db
-.DS_Store
-runtime
-dist
+.gitignore
+.npmignore
+tsconfig.json
+.idea
+aot
+*.ngfactory.*
+*.ngsummary.*
