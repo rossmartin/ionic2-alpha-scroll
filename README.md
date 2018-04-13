@@ -30,10 +30,6 @@ Configurable Ionic 2 component for alphabetically indexed list with an alpha scr
   })
   ```
 
-  ### KNOWN ISSUE - I cannot get AoT compiling to work currently.  I am looking into how to make this possible with the Ionic 2.0.0 stable release.  If anyone knows how to make it compatible with AoT please submit a pull request.  
-
-  ### This means you cannot run `ionic build ios --prod` because that will use AoT compiling.  Unfortunately you will have to use `ionic build ios` and omit the AoT compiling to use this component.
-
 ## Demo
 [Here is a sample Ionic 2 app on GitHub that shows how to use this component](https://github.com/rossmartin/ionic2-alpha-scroll-example)
 ![Animated](alpha-scroll.gif)
@@ -53,7 +49,7 @@ To use the `ion-alpha-scroll` component add this below to the `<ion-content>` in
 
 * `listData` is the model you would like to sort. Use an array of objects here.
 * `key` is the name of the key you would like to sort by.
-* `itemTemplate` is the template to display for the properties of each item in the model.
+* `itemTemplate` is the reference to the template to display for the properties of each item in the model.
 * `currentPageClass` is a reference to the instance of the current current page class (see example below).  This is needed so that bindings on the `itemTemplate` can refer to the Ionic 2 page class containing the `ion-alpha-scroll`.
 * `triggerChange` can be any property you want that can be changed to trigger `ngOnChange` for the `ion-alpha-scroll` component.  If `listData` was modified the alpha list will reflect that after triggering the change.
 
@@ -70,12 +66,17 @@ Heres a quick example:
     </ion-header>
 
     <ion-content class="alpha-list-page">
-      <ion-alpha-scroll *ngIf="breeds"
+      <ion-alpha-scroll
         [listData]="breeds"
         key="name"
-        [itemTemplate]="alphaScrollItemTemplate"
+        [itemTemplate]="alphaScrollItemTemplateRef"
         [currentPageClass]="currentPageClass"
         [triggerChange]="triggerAlphaScrollChange">
+
+          <ng-template #alphaScrollItemTemplateRef let-item>
+            <ion-item (click)="currentPageClass.onItemClick(item)">{{item.$t}}</ion-item>
+          </ng-template>
+
       </ion-alpha-scroll>
     </ion-content>
   `
@@ -83,11 +84,6 @@ Heres a quick example:
 export class AlphaListPage {
   breeds: any;
   currentPageClass = this;
-  alphaScrollItemTemplate: string = `
-    <ion-item (click)="currentPageClass.onItemClick(item)">
-      {{item.name}}
-    </ion-item>
-  `;
   triggerAlphaScrollChange: number = 0;
 
   constructor() {
