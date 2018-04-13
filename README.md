@@ -43,6 +43,7 @@ To use the `ion-alpha-scroll` component add this below to the `<ion-content>` in
   key="name"
   [itemTemplate]="alphaScrollItemTemplate"
   [currentPageClass]="currentPageClass"
+  [highlight]="true"
   [triggerChange]="triggerAlphaScrollChange">
 </ion-alpha-scroll>
 ```
@@ -51,6 +52,7 @@ To use the `ion-alpha-scroll` component add this below to the `<ion-content>` in
 * `key` is the name of the key you would like to sort by.
 * `itemTemplate` is the reference to the template to display for the properties of each item in the model.
 * `currentPageClass` is a reference to the instance of the current current page class (see example below).  This is needed so that bindings on the `itemTemplate` can refer to the Ionic 2 page class containing the `ion-alpha-scroll`.
+* `highlight` can set to true or false to highlight the current letter in the sidebar.
 * `triggerChange` can be any property you want that can be changed to trigger `ngOnChange` for the `ion-alpha-scroll` component.  If `listData` was modified the alpha list will reflect that after triggering the change.
 
 Heres a quick example:
