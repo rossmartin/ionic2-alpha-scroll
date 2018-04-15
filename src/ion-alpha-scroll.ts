@@ -66,6 +66,7 @@ export class IonAlphaScroll {
   @Input() key: string;
   @Input() itemTemplate: ElementRef;
   @Input() currentPageClass: any;
+  @Input() highlight: boolean = false;
   @Input() triggerChange: any;
 
   sortedItems: any = {};
@@ -77,6 +78,7 @@ export class IonAlphaScroll {
   ngOnInit() {
     setTimeout(() => {
       this.setupHammerHandlers();
+      this.setupScrollHandlers();
       this.alphaScrollGoToList();
     });
   }
@@ -130,6 +132,7 @@ export class IonAlphaScroll {
         const offsetY = letterDivider.offsetTop;
         const _scrollContent: any = this._scrollEle._scrollContent.nativeElement;
         _scrollContent.scrollTop = offsetY;
+        this.highlightLetter(letter);
       }
     }
   }
@@ -174,6 +177,39 @@ export class IonAlphaScroll {
         }
       }
     }, 50));
+  }
+
+  setupScrollHandlers() {
+    if (!this.highlight) return;
+
+    this._scrollEle.addScrollEventListener(($e) => {
+      const offsetY = $e.target.scrollTop;
+      const selector: string = '.ion-alpha-scroll ion-item-divider';
+      const letterDividers: any = this._elementRef.nativeElement.querySelectorAll(selector);
+
+      for (var i = 0; i < letterDividers.length; i++) {
+        if (letterDividers[i].offsetTop <= offsetY) {
+          let letterDivider = letterDividers[i];
+          if (letterDivider) {
+            const letterDividerId: string = letterDivider.id;
+            const letter = letterDividerId.replace('scroll-letter-', '');
+            this.highlightLetter(letter);
+          }
+        }
+      }
+    });
+  }
+
+  highlightLetter(letter: string) {
+    if (!this.highlight) return;
+
+    let sidebarLetterElements: any = this._elementRef.nativeElement.querySelectorAll('.ion-alpha-sidebar li a');
+    for (var i = 0; i < sidebarLetterElements.length; i++) {
+      sidebarLetterElements[i].classList.remove("selected");
+    }
+
+    let letterEl: any = this._elementRef.nativeElement.querySelector('#sidebar-letter-' + letter);
+    letterEl.classList.add("selected");
   }
 
   trackBySortedItems(index: number, item: any): number {
